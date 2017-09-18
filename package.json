@@ -1,0 +1,33 @@
+{
+  "name": "websockets-chat-starter",
+  "version": "1.0.0",
+    "engines":{
+      "node": "8.4.0",
+        "npm": "5.3.0" 
+    },
+  "description": "my websocket chat server assignment",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Tests Complete\"",
+      "start": "node ./src/server.js",
+      "pretest": "eslint ./src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewfong3/websockets-chat-starter.git"
+  },
+  "author": "Matthew Fong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matthewfong3/websockets-chat-starter/issues"
+  },
+  "homepage": "https://github.com/matthewfong3/websockets-chat-starter#readme",
+  "dependencies": {
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}

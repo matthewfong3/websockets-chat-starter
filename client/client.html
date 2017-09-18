@@ -10,6 +10,68 @@
          online at your node.js address under /socket.io/socket.io.js 
          You can disable that on the server if desired
     -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type='text/babel'>
+        const connectSocket = (e) => {
+            const message = document.querySelector('#message');
+            const chat = document.querySelector('#chat');
+            const send = document.querySelector('#send');
+            const changeButton = document.querySelector('#changeUNButton');
+            const socket = io.connect();
+            
+            let user;
+          
+            // fires when client is connecting to server
+            socket.on('connect', () => {
+                console.log('connecting');
+                
+                user = document.querySelector('#username').value;
+                
+                if(!user){
+                    user = 'unknown';
+                }
+                
+                socket.emit('join', {name: user}); // tells server what our client's username is
+            });
+            
+            // fires when client is sending a message request to the server
+            const sendMessage = (e) => {
+                console.log('sending message');
+                
+                let message = document.querySelector('#message').value;
+                if(message) socket.emit('msgToServer', {msg: message});
+            };
+          
+            send.addEventListener('click', sendMessage);
+            
+            // fires when client is sending a request to the server to change its username
+            const changeUserName = (e) => {
+                console.log('changing username');
+              
+                let change = document.querySelector('#changeUsername').value;
+                if(change) socket.emit('changeToServer', {name: user, changedName: change});
+            };
+          
+            changeButton.addEventListener('click', changeUserName);
+          
+            // fires when client is receiving messages back from the server
+            socket.on('msg', (data) => {
+                console.log(data); 
+                
+                var text = data.name + ': ' + data.msg + '\n';
+                chat.innerHTML += text;
+            });
+        };
+
+       
+
+        const init = () => {
+            const connect = document.querySelector('#connect');
+            connect.addEventListener('click', connectSocket);
+        };
+
+        window.onload = init;
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
 	<style>
 		textarea {
@@ -23,6 +85,10 @@
 	<input id="username" name="user" type="text"/>
 	<input id="connect" type='button' value='connect'/>
 	<br/>
+    <label for="changeName">Change Username:</label>
+    <input id="changeUsername" name="changeName" type="text"/>
+    <input id="changeUNButton" type="button" value="change"/>
+    <br/>
 	<label for="message">Message:</label>
 	<input id="message" name="message" type="text"/>
 	<input id="send" type="button" value="send" />
