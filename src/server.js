@@ -83,7 +83,7 @@ const onJoined = (sock) => {
     // add (individual person/client) to users object  
     // users.name.push(data.name);
     users[socket.name] = socket.name;
-
+    console.log(users);
     // announcement to everyone in the room
     const response = {
       name: 'server',
@@ -121,7 +121,9 @@ const onChange = (sock) => {
         name: 'server',
         msg: `${socket.name} has changed name to ${data.changedName}.`,
       };
+      delete users[socket.name];
       socket.name = data.changedName;
+      users[socket.name] = socket.name;
       io.sockets.in('room1').emit('msg', response);
     } else {
       socket.emit('msg', { name: 'server', msg: 'Failed to change username' });
