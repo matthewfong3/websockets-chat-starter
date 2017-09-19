@@ -83,7 +83,7 @@ const onJoined = (sock) => {
     // add (individual person/client) to users object  
     // users.name.push(data.name);
     users[socket.name] = socket.name;
-    console.log(users);
+   
     // announcement to everyone in the room
     const response = {
       name: 'server',
